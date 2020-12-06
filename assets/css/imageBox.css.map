@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "../../scss/components/imageBox.scss"
+    ],
+    "names": [],
+    "file": "imageBox.css"
+}

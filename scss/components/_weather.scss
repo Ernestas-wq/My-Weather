@@ -1,0 +1,75 @@
+.weather {
+  margin: 50px 0 20px;
+  //   List of cities
+
+  &__cities {
+    display: grid;
+    grid-gap: 32px 20px;
+    grid-template-columns: repeat(4, 1fr);
+    @include responsive-xsm() {
+      grid-template-columns: repeat(1, 1fr);
+    }
+    @include responsive-sm() {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  // Individual city card
+
+  &__city {
+    position: relative;
+    padding: 40px 20px;
+    border-radius: 23px;
+    background: var(--text_light);
+    color: var(--text_med);
+    sup {
+      font-size: 0.6em;
+    }
+  }
+  &__heading {
+    position: relative;
+    sup {
+      position: absolute;
+      margin-left: 10px;
+      padding: 0.2em 0.6em;
+      border-radius: 30px;
+      color: var(--text_light);
+      background: var(--orange);
+    }
+  }
+  &__city::after {
+    content: "";
+    width: 90%;
+    height: 50px;
+    position: absolute;
+    bottom: -12px;
+    left: 5%;
+    z-index: -1;
+    opacity: 0.3;
+    border-radius: 20px;
+    background: var(--text_light);
+  }
+  &__temp {
+    position: relative;
+    font-size: 5rem;
+    font-weight: bold;
+    margin-top: 10px;
+    color: var(--text_dark);
+    @include responsive-xsm() {
+      font-size: 3.5rem;
+    }
+    sup {
+      position: absolute;
+      top: 10px;
+    }
+  }
+  &__icon {
+    margin-top: 10px;
+    width: 100px;
+    height: 100px;
+  }
+}
+figcaption {
+  margin-top: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}

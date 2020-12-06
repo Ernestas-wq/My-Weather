@@ -1,0 +1,28 @@
+@mixin responsive-xsm() {
+  @media screen and (max-width: 500px) {
+    @content;
+  }
+}
+
+@mixin responsive-sm() {
+  @media screen and (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin responsive-md() {
+  @media screen and (max-width: 992px) {
+    @content;
+  }
+}
+
+@mixin responsive-lg() {
+  @media screen and (max-width: 1200px) {
+    @content;
+  }
+}
+@mixin align-center() {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
