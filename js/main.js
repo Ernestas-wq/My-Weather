@@ -45,8 +45,7 @@ function createCard(data) {
   <figure>
   <img class="weather__icon" src=${icon} alt="${data.weather[0]["main"]}">
   <figcaption>${data.weather[0]["description"]} </figcaption>
-  </figure>
-  `;
+  </figure>`;
   flickrValue = data.name;
   li.innerHTML = markup;
   cityList.appendChild(li);
@@ -56,7 +55,6 @@ const fetchImages = async (url) => {
   try {
     const res = await fetch(url);
     const data = await res.json();
-    console.log(data);
     data.photos.photo.forEach((photo) => {
       let imageSrc = `https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_w.jpg`;
       createImageHolder(imageSrc);
@@ -65,9 +63,7 @@ const fetchImages = async (url) => {
     console.error(err);
   }
 };
-
 // Create image container from the fetched url
-
 function createImageHolder(url) {
   let div = document.createElement("div");
   div.classList.add("imageHolder");
