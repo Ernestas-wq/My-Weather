@@ -6,32 +6,32 @@ const searchMessage = document.getElementById("searchMessage");
 const cityList = document.getElementById("cityList");
 const imageBox = document.getElementById("imageBox");
 const imageBoxHeading = document.getElementById("imageBoxHeading");
+
 form.addEventListener("submit", (e) => {
-  imageBox.innerHTML = "";
   e.preventDefault();
   const searchVal = searchInput.value;
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${searchVal}&appid=${WEATHER_API_KEY}&units=metric`;
-
-  fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-      imageBoxHeading.innerText = "";
-      let flickrUrl = `
-      https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${FLICKR_API_KEY}&tags=${
-        data.name
-      }&text=${data.name + " city"}
-      &safe_search=1&per_page=9&content_type=1&sort=relevance&format=json&nojsoncallback=1`;
-      imageGalery(flickrUrl);
-      createCard(data);
-      imageBoxHeading.innerHTML = `Here are some pictures from ${data.name} for you to check 🦄`;
-    })
-    .catch(() => {
-      searchMessage.textContent = "Please search for a valid city 🎉 ";
-    });
-  searchInput.value = "";
-  searchMessage.innerHTML = "";
+  fetchWeather(searchVal);
 });
 
+// Fetch weather
+const fetchWeather = async (searchVal) => {
+  try {
+    const res = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${searchVal}&appid=${WEATHER_API_KEY}&units=metric`
+    );
+    const data = await res.json();
+    createCard(data);
+    const flickrUrl = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${FLICKR_API_KEY}&tags=${
+      data.name
+    }&text=${
+      data.name + " city"
+    }&safe_search=1&per_page=9&content_type=1&sort=relevance&format=json&nojsoncallback=1`;
+    fetchImages(flickrUrl);
+  } catch (err) {
+    console.error(err);
+  }
+};
+// Create card to hold data of weather
 function createCard(data) {
   const li = document.createElement("li");
   li.classList.add("weather__city");
@@ -51,20 +51,23 @@ function createCard(data) {
   li.innerHTML = markup;
   cityList.appendChild(li);
 }
-
-function imageGalery(url) {
-  fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-      data.photos.photo.forEach((p) => {
-        let myUrl = `https://live.staticflickr.com/${p.server}/${p.id}_${p.secret}_w.jpg`;
-        createImageHolder(myUrl);
-      });
-    })
-    .catch(() => {
-      console.log("Err");
+// Get some pictures of the searched city
+const fetchImages = async (url) => {
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    console.log(data);
+    data.photos.photo.forEach((photo) => {
+      let imageSrc = `https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_w.jpg`;
+      createImageHolder(imageSrc);
     });
-}
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+// Create image container from the fetched url
+
 function createImageHolder(url) {
   let div = document.createElement("div");
   div.classList.add("imageHolder");
