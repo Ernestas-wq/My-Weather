@@ -31,6 +31,7 @@ const fetchWeather = async (searchVal) => {
     console.error(err);
   }
 };
+
 // Create card to hold data of weather
 function createCard(data) {
   const li = document.createElement("li");
